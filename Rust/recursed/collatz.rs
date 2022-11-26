@@ -1,4 +1,3 @@
-
 use std::env;
 use std::fmt;
 
@@ -32,7 +31,6 @@ fn collatz(n :i64) -> i64 {
 
 
 }
-
 
 
 fn main() {
