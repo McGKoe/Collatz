@@ -1,3 +1,4 @@
+
 use std::env;
 use std::fmt;
 
@@ -9,25 +10,28 @@ struct Cell {
 }
 
 impl fmt::Display for Cell {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}		{}", self.num, self.length)
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		write!(f, "{}		{}", self.num, self.length)
     }
 }
 
-
+//determines length of collatz sequence recursively
 fn collatz(n :i64) -> i64 {
 
+	//base case
+	if n == 1 {
+		return 0;
+	}
+
 	if n % 2 == 0 {
-		return n/2;
+		return collatz(n/2) + 1;
 	} 
 	else {
-		return n*3 + 1;
+		return collatz(n*3 + 1) + 1;
 	}
 
 
 }
-
-
 
 
 
@@ -49,7 +53,7 @@ fn main() {
 
 
 
-
+	//create array of cells
 	let mut cells = Vec::<Cell>::with_capacity(asize);
 
 	let mut begin = arg1a as i32;
@@ -60,16 +64,8 @@ fn main() {
 		let num = begin;
 	
 		//test value to calcualte collatz sequence length
-		let mut test = begin as i64;
-		let mut length = 0;
-
-		while test > 1 {
-
-			test = collatz(test);
-			length = length + 1;
-
-
-		}
+		let test = begin as i64;
+		let length = collatz(test) as i32;
 
 
 		let temp = Cell {num, length};
@@ -112,3 +108,4 @@ fn main() {
 
 
 }
+
