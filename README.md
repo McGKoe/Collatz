@@ -24,7 +24,7 @@
     For example:
         ./collatz.jl 50 100
 
-#Lisp
+# Lisp
     To compile:
         chmod u+x collatz.lisp
     To run:
