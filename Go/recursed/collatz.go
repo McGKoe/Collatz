@@ -70,6 +70,12 @@ func main(){
 	begin := int64(arg1a)
 	end := int64(arg2a)
 
+	if(end < begin) {
+		hold := begin
+		begin = end
+		end = hold
+	}
+
 
 	var cells []Cell //empty set of cells for sorting purposes
 
