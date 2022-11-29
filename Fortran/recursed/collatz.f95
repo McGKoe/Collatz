@@ -3,7 +3,7 @@ program collatz
 
         integer :: count
 
-        integer(kind = 16) :: num1, num2, passed, val, begin, test
+        integer(kind = 16) :: num1, num2, passed, val, begin, test, hold
         integer(kind = 16) :: collatzz
         external collatzz
 
@@ -42,6 +42,15 @@ CALL get_command_argument(2, num2char)
 read(num1char,*)num1
 read(num2char,*)num2
 
+if(num2 < num1) then
+        hold = num1
+        num1 = num2
+        num2 = hold
+end if
+
+
+
+
 !allocate space to arrays
 allocate(setofcells (num2-num1 + 1))
 allocate(res (num2-num1 + 1))
@@ -65,13 +74,6 @@ do while (begin <= num2)
 
         count = collatzz (test)
 
-!        do while (test /= 1)
-        
- !               count = count + 1
-  !              test = collatzz (test)
-
-   !     end do
-
         temp%length = count
 
 
@@ -91,24 +93,32 @@ end do
 
 print *, "Sorted by sequence length:"
 
-do i = 1, 10
-        
+i = 1
+do
+        if (i == size(setofcells) .or. i == 11) then
+                exit
+        end if
+
+        if (res(i)%num == 0 .and. res(i)%length == 0) then
+                exit
+        end if
+
+
         print*, res(i)
-
-end do
-
-do i = 1, 10
-
         final2(i) = res(i)
 
+        i = i + 1
 end do
 
-        call sort2(final2, 10)
 
+        call sort2(final2, 10)
 print *, "Sorted by Integer size: "
 
-do i = 1, 10
-        
+do i = 1, size(final2)
+        if (final2(i)%num == 0 .and. final2(i)%length == 0) then
+                exit
+        end if
+
         print*, final2(i)
 
 end do
