@@ -3,7 +3,7 @@ program collatz
 
         integer :: count
 
-        integer(kind = 16) :: num1, num2, passed, val, begin, test
+        integer(kind = 16) :: num1, num2, passed, val, begin, test, hold
         integer(kind = 16) :: collatzz
         external collatzz
 
@@ -41,6 +41,14 @@ CALL get_command_argument(2, num2char)
 !convert to int
 read(num1char,*)num1
 read(num2char,*)num2
+
+if(num2 < num1) then
+        hold = num1
+        num1 = num2
+        num2 = hold
+end if
+        
+
 
 !allocate space to arrays
 allocate(setofcells (num2-num1 + 1))
@@ -83,30 +91,41 @@ do while (begin <= num2)
 end do
 
 
-
+!sorts array by length of collatz sequence and remove duplicates
         call sort (setofcells, int(num2-num1, 4))
 
         call remove_dups(setofcells, size(setofcells), res, k)
 
+ 
+
 print *, "Sorted by sequence length:"
 
-do i = 1, 10
+i = 1
+do
+        if (i == size(setofcells) .or. i == 11) then
+                exit
+        end if
         
+        if (res(i)%num == 0 .and. res(i)%length == 0) then
+                exit
+        end if
+
+
         print*, res(i)
-
-end do
-
-do i = 1, 10
-
         final2(i) = res(i)
-
+        
+        i = i + 1
 end do
 
-        call sort2(final2, 10)
+!sorts the array by integer size
+        call sort2(final2, size(final2))
 
 print *, "Sorted by Integer size: "
 
-do i = 1, 10
+do i = 1, size(final2)
+        if (final2(i)%num == 0 .and. final2(i)%length == 0) then
+                exit
+        end if
         
         print*, final2(i)
 
