@@ -4,8 +4,8 @@ use std::fmt;
 
 #[derive(Clone, Copy, Debug)]
 struct Cell {
-    num: i32,
-    length: i32,
+    num: i64,
+    length: i64,
 }
 
 impl fmt::Display for Cell {
@@ -42,8 +42,16 @@ fn main() {
 	let arg2 = &args[2];
 
 
-	let arg1a: usize  = arg1.trim().parse::<usize>().unwrap();
-	let arg2a: usize  = arg2.trim().parse::<usize>().unwrap();
+	let mut arg1a: usize  = arg1.trim().parse::<usize>().unwrap();
+	let mut arg2a: usize  = arg2.trim().parse::<usize>().unwrap();
+
+
+        if arg2a < arg1a {
+                let hold = arg1a;
+                arg1a = arg2a;
+                arg2a = hold
+        }
+
 
 
 	//convert arguments into usize constant to use as vector capacity
@@ -54,16 +62,16 @@ fn main() {
 	//create array of cells
 	let mut cells = Vec::<Cell>::with_capacity(asize);
 
-	let mut begin = arg1a as i32;
+	let mut begin = arg1a;
 
-	while begin < arg2a as i32 {
+	while begin <= arg2a {
 
 		//saving num
-		let num = begin;
+		let num = begin as i64;
 	
 		//test value to calcualte collatz sequence length
 		let test = begin as i64;
-		let length = collatz(test) as i32;
+		let length = collatz(test) as i64;
 
 
 		let temp = Cell {num, length};
@@ -89,6 +97,9 @@ fn main() {
 
 	println!("Sorted by sequence length: ");
 	for i in 0..10 {
+		if i == cells.len(){
+			break;
+		}
 		println!("{}", cells[i]);
 
 		final1.push(cells[i]);
@@ -99,6 +110,9 @@ fn main() {
 
 	println!("Sorted by integer size:  ");
 	for i in 0..10 {
+		if i == final1.len(){
+			break;
+		}
 		println!("{}", final1[i]);
 	}
 
