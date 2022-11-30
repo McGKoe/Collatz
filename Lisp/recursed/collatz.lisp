@@ -41,6 +41,16 @@
 ;take second command line input
 (setf num2 (parse-integer (nth 2 sb-ext:*posix-argv*)) )
 
+(if (< num2 num1)
+	(progn
+		(defvar hold)
+		(setf hold num1)
+		(setf num1 num2)
+		(setf num2 hold)
+
+	)
+
+)
 
 
 ;;declare and set first number to find collatz
@@ -52,7 +62,7 @@
 (setf seq 0)
 
 ;; find scollayz sequence for each number between num1 and num2
-(loop for i from num1 below num2 do
+(loop for i from num1 below (+ 1 num2) do
 
 	(setf seq 0)
 
@@ -77,9 +87,7 @@
 (setf *final* (sort  *setofcells* #'> :key #'cell-seqlength))
 
 ;remove duplicates
-
-(delete-duplicates *final* :key #'cell-seqlength)
-
+(setf *final* (delete-duplicates *final* :key #'cell-seqlength))
 
 
 
@@ -108,16 +116,6 @@
 	for i from 1 to 10
 	do (format t "~d 		~d~%" (cell-num item) (cell-seqlength item))
 )
-
-
-
-
-
-
-
-
-
-
 
 
 )
