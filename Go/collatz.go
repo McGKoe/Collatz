@@ -80,7 +80,7 @@ func main(){
 	var cells []Cell //empty set of cells for sorting purposes
 
 
-	for (begin < end) {
+	for (begin <= end) {
 
 		var temp Cell
 
