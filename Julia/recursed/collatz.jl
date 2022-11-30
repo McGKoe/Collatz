@@ -29,6 +29,11 @@ arg2 = ARGS[2]
 start = parse(Int64, arg1)
 stop = parse(Int64, arg2)
 
+if stop < start
+	hold = start
+	start = stop
+	stop = hold
+end	
 
 #array of cells to sort
 cells = Array{Cell,1}(undef, (stop-start))
@@ -65,10 +70,18 @@ sort!(cells, by = x -> x.length, rev = true)
 
 final = Array{Cell,1}(undef, 10)
 
+#fill final array with 0 cells
+final = fill!(final, Cell(0,0))
+
 println("Sorted by sequence length: ")
 
 #add largest sequence lengths to final array
 for i = 1:10
+	if i > length(cells)
+		break
+	end
+
+
 	println(cells[i].num, "		", cells[i].length)
 	final[i] = cells[i]
 
@@ -81,6 +94,9 @@ sort!(final, by = x -> x.num, rev = true)
 println("Sorted based on integer size: ")
 
 for i = 1:10
+	if final[i].num == 0
+		break
+	end
 	println(final[i].num, "		", final[i].length)
 
 end
