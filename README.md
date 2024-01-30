@@ -1,6 +1,6 @@
 # The Collatz Conjecture
 
-
+A program that will print the collatz numbers between two numbers, inclusive. Recursive and iterative versions are available in each language.
 
 # Fortran
     To compile:
